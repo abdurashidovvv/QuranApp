@@ -1,4 +1,4 @@
-package uz.abdurashidov.quranapp.ui.theme
+package uz.abdurashidov.quranapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

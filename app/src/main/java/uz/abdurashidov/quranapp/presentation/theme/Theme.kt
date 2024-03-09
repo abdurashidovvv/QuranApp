@@ -1,4 +1,4 @@
-package uz.abdurashidov.quranapp.ui.theme
+package uz.abdurashidov.quranapp.presentation.theme
 
 import android.app.Activity
 import android.os.Build
