@@ -5,7 +5,6 @@ package uz.abdurashidov.quranapp.presentation.home
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,19 +18,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.VerticalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,7 +41,9 @@ import uz.abdurashidov.quranapp.presentation.theme.cardColor
 import uz.abdurashidov.quranapp.presentation.theme.mainBackgroundColor
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeScreenViewModel: HomeScreenViewModel
+) {
     Column(
         modifier = Modifier
             .background(mainBackgroundColor)
@@ -58,7 +56,7 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(20.dp))
         CardSection(surahName = "Al-Fatiha", ayahNumber = 1) {}
         Spacer(modifier = Modifier.height(30.dp))
-        MainSection(SurahList.surahs)
+        MainSection(homeScreenViewModel.allQuranSurahs.collectAsState().value)
     }
 }
 
@@ -164,7 +162,7 @@ fun MainSection(
 ) {
     LazyColumn {
         items(list.size) {
-            SurahItem(data = list[it]){
+            SurahItem(data = list[it]) {
 
             }
         }
@@ -232,68 +230,6 @@ private fun HomeScreenPreview() {
                 numberOfAyahs = 7,
                 revelationType = ""
             )
-        ){}
+        ) {}
     }
-}
-
-
-object SurahList {
-    val surahs = listOf(
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-        Data(
-            englishName = "Al-Fatiha",
-            englishNameTranslation = "The Opener",
-            name = "ةحَتِافَلْا",
-            number = 1,
-            numberOfAyahs = 7,
-            revelationType = ""
-        ),
-    )
 }
