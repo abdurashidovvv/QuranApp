@@ -10,7 +10,7 @@ import uz.abdurashidov.quranapp.data.remote.model.surahs.GetAllSurahsResponse
 
 interface ApiService {
 
-    @GET("surah/")
+    @GET("surah")
     suspend fun getAllSurahs(): Response<GetAllSurahsResponse>
 
     @GET("surah/{surahNumber}/ar.alafasy")

@@ -27,13 +27,13 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 quranRepository.getAllSurahs().collectLatest {
-                    Log.d("CheckingData", "$it: ")
+                    Log.d("CheckingData", "$it")
                     if (it.isSuccessful){
                         _allQuranSurahs.value = it.body()!!.data
                     }
                 }
             } catch (e: Exception) {
-
+                Log.d("CheckingData", "$e")
             }
         }
     }

@@ -1,6 +1,7 @@
 package uz.abdurashidov.quranapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -32,6 +33,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val list = homeScreenViewModel.allQuranSurahs.collectAsState().value
+                    Log.d("AllData", "onCreate: $list")
                     HomeScreen(homeScreenViewModel)
                 }
             }
