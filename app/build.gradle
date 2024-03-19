@@ -100,4 +100,13 @@ dependencies {
 
     //ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    // Navigator
+    def voyagerVersion = "1.0.0"
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        languageVersion = "1.9"
+    }
 }

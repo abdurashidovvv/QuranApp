@@ -32,6 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import cafe.adriel.voyager.core.screen.Screen
 import uz.abdurashidov.quranapp.R
 import uz.abdurashidov.quranapp.data.remote.model.surahs.Data
 import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
@@ -42,8 +45,11 @@ import uz.abdurashidov.quranapp.presentation.theme.mainBackgroundColor
 
 @Composable
 fun HomeScreen(
-    homeScreenViewModel: HomeScreenViewModel
+    navController:NavHostController
 ) {
+
+    val homeScreenViewModel = viewModel<HomeScreenViewModel>()
+
     Column(
         modifier = Modifier
             .background(mainBackgroundColor)
@@ -58,6 +64,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(30.dp))
         MainSection(homeScreenViewModel.allQuranSurahs.collectAsState().value)
     }
+
 }
 
 @Composable
