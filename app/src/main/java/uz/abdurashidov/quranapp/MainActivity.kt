@@ -14,10 +14,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import cafe.adriel.voyager.navigator.Navigator
 import dagger.hilt.android.AndroidEntryPoint
 import uz.abdurashidov.quranapp.presentation.home.HomeScreen
 import uz.abdurashidov.quranapp.presentation.home.HomeScreenViewModel
+import uz.abdurashidov.quranapp.presentation.navigation.AppNavHost
 import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
 
 @AndroidEntryPoint
@@ -33,10 +35,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    
-                    val list = homeScreenViewModel.allQuranSurahs.collectAsState().value
-                    Log.d("AllData", "onCreate: $list")
-                    HomeScreen(homeScreenViewModel)
+                    val navController = rememberNavController()
+                    AppNavHost(modifier = Modifier.fillMaxSize(), navController = navController)
                 }
             }
         }
