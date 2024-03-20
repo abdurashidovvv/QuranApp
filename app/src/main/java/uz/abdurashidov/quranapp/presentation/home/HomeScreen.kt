@@ -32,23 +32,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import cafe.adriel.voyager.core.screen.Screen
 import uz.abdurashidov.quranapp.R
 import uz.abdurashidov.quranapp.data.remote.model.surahs.Data
+import uz.abdurashidov.quranapp.presentation.navigation.Screen
 import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
 import uz.abdurashidov.quranapp.presentation.theme.boldTextColorBlack
 import uz.abdurashidov.quranapp.presentation.theme.boldTextColorPurple
 import uz.abdurashidov.quranapp.presentation.theme.cardColor
 import uz.abdurashidov.quranapp.presentation.theme.mainBackgroundColor
 
+
 @Composable
 fun HomeScreen(
-    navController:NavHostController
+    navController: NavHostController,
+    homeScreenViewModel: HomeScreenViewModel
 ) {
 
-    val homeScreenViewModel = viewModel<HomeScreenViewModel>()
 
     Column(
         modifier = Modifier
@@ -62,7 +62,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(20.dp))
         CardSection(surahName = "Al-Fatiha", ayahNumber = 1) {}
         Spacer(modifier = Modifier.height(30.dp))
-        MainSection(homeScreenViewModel.allQuranSurahs.collectAsState().value)
+        MainSection(
+            homeScreenViewModel.allQuranSurahs.collectAsState().value,
+            navController = navController
+        )
     }
 
 }
@@ -165,12 +168,13 @@ fun CardSection(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainSection(
-    list: List<Data>
+    list: List<Data>,
+    navController: NavHostController
 ) {
     LazyColumn {
         items(list.size) {
             SurahItem(data = list[it]) {
-
+                navController.navigate(Screen.DETAIL.name)
             }
         }
     }
@@ -180,7 +184,7 @@ fun MainSection(
 fun SurahItem(data: Data, onClick: () -> Unit) {
     Column(
         modifier = Modifier.clickable {
-            onClick
+            onClick()
         }
     ) {
         Spacer(modifier = Modifier.height(10.dp))

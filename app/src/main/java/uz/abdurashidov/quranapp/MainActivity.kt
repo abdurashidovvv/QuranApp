@@ -36,7 +36,11 @@ class MainActivity : ComponentActivity() {
                     Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    AppNavHost(modifier = Modifier.fillMaxSize(), navController = navController)
+                    AppNavHost(
+                        modifier = Modifier.fillMaxSize(),
+                        navController = navController,
+                        homeScreenViewModel = homeScreenViewModel
+                    )
                 }
             }
         }
