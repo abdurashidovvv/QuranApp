@@ -3,8 +3,10 @@ package uz.abdurashidov.quranapp.presentation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import uz.abdurashidov.quranapp.presentation.detail.DetailScreen
 import uz.abdurashidov.quranapp.presentation.home.HomeScreen
 import uz.abdurashidov.quranapp.presentation.home.HomeScreenViewModel
@@ -21,8 +23,14 @@ fun AppNavHost(
         composable(NavigationItem.Home.route) {
             HomeScreen(navController = navController, homeScreenViewModel = homeScreenViewModel)
         }
-        composable(NavigationItem.Detail.route) {
-            DetailScreen(navController = navController)
+        composable(
+            route = NavigationItem.Detail.route + "/{argument}",
+            arguments = listOf(navArgument("argument") { type = NavType.IntType })
+        ) { backStackEntry ->
+            DetailScreen(
+                navController = navController,
+                argument = backStackEntry.arguments?.getInt("argument")
+            )
         }
         composable(NavigationItem.Settings.route) {
             SettingsScreen(navController = navController)

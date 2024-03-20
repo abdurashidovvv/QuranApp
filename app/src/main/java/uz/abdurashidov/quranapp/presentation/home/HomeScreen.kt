@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import uz.abdurashidov.quranapp.R
 import uz.abdurashidov.quranapp.data.remote.model.surahs.Data
+import uz.abdurashidov.quranapp.presentation.navigation.NavigationItem
 import uz.abdurashidov.quranapp.presentation.navigation.Screen
 import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
 import uz.abdurashidov.quranapp.presentation.theme.boldTextColorBlack
@@ -174,7 +175,7 @@ fun MainSection(
     LazyColumn {
         items(list.size) {
             SurahItem(data = list[it]) {
-                navController.navigate(Screen.DETAIL.name)
+                navController.navigate(NavigationItem.Detail.route + "/$it")
             }
         }
     }
