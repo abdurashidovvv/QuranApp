@@ -3,6 +3,7 @@ package uz.abdurashidov.quranapp.presentation.detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,12 +30,13 @@ import uz.abdurashidov.quranapp.R
 import uz.abdurashidov.quranapp.data.remote.model.ayahs_ar.Ayah
 import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
 import uz.abdurashidov.quranapp.presentation.theme.boldTextColorBlack
+import uz.abdurashidov.quranapp.presentation.theme.cardColor
 import uz.abdurashidov.quranapp.presentation.theme.mainBackgroundColor
 
 @Composable
 fun DetailScreen(
     navController: NavHostController,
-    argument: Int?
+    argument: Int?,
 ) {
     Column(
         modifier = Modifier
@@ -45,12 +47,13 @@ fun DetailScreen(
         CustomAppBar()
         Spacer(modifier = Modifier.height(30.dp))
         DescriptionSection(ayahName = "Al-Fatiha", ayahVerse = 7, ayahEnglishName = "The Opener")
+        MainSection(list = Data.ayahs)
     }
 }
 
 @Composable
 fun CustomAppBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -76,7 +79,7 @@ fun CustomAppBar(
 fun DescriptionSection(
     ayahName: String,
     ayahVerse: Int,
-    ayahEnglishName: String
+    ayahEnglishName: String,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -116,14 +119,42 @@ fun DescriptionSection(
 
 
 @Composable
-fun MainSection(list:Map<Ayah, uz.abdurashidov.quranapp.data.remote.model.ayahs_en.Ayah>) {
+fun MainSection(list: List<Map<String, String>>) {
     LazyColumn {
-        items(list.size){
-
+        items(list.size) {
+            AyahItem(ayah = list[it])
         }
     }
 }
 
+@Composable
+fun AyahItem(ayah: Map<String, String>) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 15.dp),
+    ) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp)
+            .height(2.dp)
+            .background(cardColor))
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd){
+            Text(text = ayah.keys.elementAt(0), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(text = ayah.values.elementAt(0))
+    }
+}
+
+object Data {
+    val ayahs = listOf(
+        mapOf("مِيحِرَّلٱ نِٰـمَحْرَّلٱ هِلَّلٱ مِسْبِ" to "In the Name of Allah-the Most Compassionate, Most Merciful"),
+        mapOf("مِيحِرَّلٱ نِٰـمَحْرَّلٱ هِلَّلٱ مِسْبِ" to "In the Name of Allah-the Most Compassionate, Most Merciful"),
+        mapOf("مِيحِرَّلٱ نِٰـمَحْرَّلٱ هِلَّلٱ مِسْبِ" to "In the Name of Allah-the Most Compassionate, Most Merciful"),
+        mapOf("مِيحِرَّلٱ نِٰـمَحْرَّلٱ هِلَّلٱ مِسْبِ" to "In the Name of Allah-the Most Compassionate, Most Merciful"),
+    )
+}
 
 @Preview
 @Composable
