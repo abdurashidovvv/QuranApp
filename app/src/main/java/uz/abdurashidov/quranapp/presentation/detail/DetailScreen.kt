@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,10 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import uz.abdurashidov.quranapp.R
-import uz.abdurashidov.quranapp.data.remote.model.ayahs_ar.Ayah
 import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
 import uz.abdurashidov.quranapp.presentation.theme.boldTextColorBlack
 import uz.abdurashidov.quranapp.presentation.theme.cardColor
@@ -37,7 +37,16 @@ import uz.abdurashidov.quranapp.presentation.theme.mainBackgroundColor
 fun DetailScreen(
     navController: NavHostController,
     argument: Int?,
+    detailScreenViewModel: DetailScreenViewModel
 ) {
+    detailScreenViewModel.getAllQuranAyahs(argument ?: 0)
+    detailScreenViewModel.getAllQuranAyahsInEnglish(argument ?: 0)
+    detailScreenViewModel.getMapList()
+
+    val allAyahsAr = detailScreenViewModel.allQuranAyahs.collectAsState().value
+    val allAyahsEng = detailScreenViewModel.allQuranAyahsTranslation.collectAsState().value
+    val allMapList = detailScreenViewModel.mapWords.collectAsState().value
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,7 +56,7 @@ fun DetailScreen(
         CustomAppBar()
         Spacer(modifier = Modifier.height(30.dp))
         DescriptionSection(ayahName = "Al-Fatiha", ayahVerse = 7, ayahEnglishName = "The Opener")
-        MainSection(list = Data.ayahs)
+        MainSection(list = allMapList)
     }
 }
 
@@ -134,12 +143,14 @@ fun AyahItem(ayah: Map<String, String>) {
             .fillMaxWidth()
             .padding(vertical = 15.dp),
     ) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp)
-            .height(2.dp)
-            .background(cardColor))
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+                .height(2.dp)
+                .background(cardColor)
+        )
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
             Text(text = ayah.keys.elementAt(0), fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -160,6 +171,6 @@ object Data {
 @Composable
 private fun DetailScreenPreview() {
     QuranAppTheme {
-        DetailScreen(navController = rememberNavController(), argument = 1)
+
     }
 }

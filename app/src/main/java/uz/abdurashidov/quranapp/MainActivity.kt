@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import cafe.adriel.voyager.navigator.Navigator
 import dagger.hilt.android.AndroidEntryPoint
+import uz.abdurashidov.quranapp.presentation.detail.DetailScreenViewModel
 import uz.abdurashidov.quranapp.presentation.home.HomeScreen
 import uz.abdurashidov.quranapp.presentation.home.HomeScreenViewModel
 import uz.abdurashidov.quranapp.presentation.navigation.AppNavHost
@@ -26,6 +27,7 @@ import uz.abdurashidov.quranapp.presentation.theme.QuranAppTheme
 class MainActivity : ComponentActivity() {
 
     val homeScreenViewModel by viewModels<HomeScreenViewModel>()
+    val detailScreenViewModel by viewModels<DetailScreenViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +41,8 @@ class MainActivity : ComponentActivity() {
                     AppNavHost(
                         modifier = Modifier.fillMaxSize(),
                         navController = navController,
-                        homeScreenViewModel = homeScreenViewModel
+                        homeScreenViewModel = homeScreenViewModel,
+                        detailScreenViewModel = detailScreenViewModel
                     )
                 }
             }

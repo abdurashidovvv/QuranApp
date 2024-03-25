@@ -1,5 +1,6 @@
 package uz.abdurashidov.quranapp.presentation.detail
 
+import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,35 +12,26 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uz.abdurashidov.quranapp.data.remote.model.ayahs_ar.Data
 import uz.abdurashidov.quranapp.domain.repository.QuranRepository
+import uz.abdurashidov.quranapp.domain.usecases.FetchAyahsUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailScreenViewModel @Inject constructor(
-    private val quranRepository: QuranRepository
+    private val fetchAyahsUseCase: FetchAyahsUseCase,
 ) : ViewModel() {
+    private val _keys = MutableStateFlow<List<String>>(emptyList())
+    val keys: StateFlow<List<String>> = _keys
 
-    private val _allQuranAyahs = MutableStateFlow<Data?>(null)
-    val allQuranAyahs: StateFlow<Data?> get() = _allQuranAyahs.asStateFlow()
-    fun getAllQuranAyahs(surahNumber: Int) {
+    private val _values = MutableStateFlow<List<String>>(emptyList())
+    val values: StateFlow<List<String>> = _values
+
+    fun fetchAyahs(surahNumber: Int) {
         viewModelScope.launch {
-            quranRepository.getAllAyahs(surahNumber = surahNumber).collectLatest {
-                if (it.isSuccessful) {
-                    _allQuranAyahs.value = it.body()!!.data
-                }
-            }
+            val (fetchedKeys, fetchedValues) = fetchAyahsUseCase(surahNumber = surahNumber)
+            _keys.value = fetchedKeys
+            _values.value = fetchedValues
         }
     }
 
-    private val _allQuranAyahsTranslation = MutableStateFlow<uz.abdurashidov.quranapp.data.remote.model.ayahs_en.Data?>(null)
-    val allQuranAyahsTranslation: StateFlow<uz.abdurashidov.quranapp.data.remote.model.ayahs_en.Data?> get() = _allQuranAyahsTranslation.asStateFlow()
 
-    fun getAllQuranAyahsInEnglish(surahNumber: Int){
-        viewModelScope.launch {
-            quranRepository.getAllAyahsTranslation(surahNumber = surahNumber).collectLatest {
-                if (it.isSuccessful) {
-                    _allQuranAyahsTranslation.value = it.body()!!.data
-                }
-            }
-        }
-    }
 }
