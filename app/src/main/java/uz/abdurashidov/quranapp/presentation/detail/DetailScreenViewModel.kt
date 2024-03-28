@@ -32,3 +32,4 @@ class DetailScreenViewModel @Inject constructor(
         }
     }
 }
+

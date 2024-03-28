@@ -47,7 +47,7 @@ import uz.abdurashidov.quranapp.presentation.theme.mainBackgroundColor
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    homeScreenViewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel,
 ) {
 
 
@@ -59,7 +59,7 @@ fun HomeScreen(
     ) {
         CustomAppBar()
         Spacer(modifier = Modifier.height(10.dp))
-        DescriptionSection(name = "Saydullo")
+        DescriptionSection(name = "Rayyonah")
         Spacer(modifier = Modifier.height(20.dp))
         CardSection(surahName = "Al-Fatiha", ayahNumber = 1) {}
         Spacer(modifier = Modifier.height(30.dp))
@@ -73,7 +73,7 @@ fun HomeScreen(
 
 @Composable
 fun CustomAppBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = Modifier
@@ -122,7 +122,7 @@ fun DescriptionSection(name: String) {
 fun CardSection(
     surahName: String,
     ayahNumber: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Card(
         onClick = onClick,
@@ -140,22 +140,18 @@ fun CardSection(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        painterResource(id = R.drawable.cache_small1),
-                        null,
-                        Modifier.size(20.dp)
+                        painter = painterResource(id = R.drawable.framebismillah),
+                        contentDescription = null,
+                        modifier = Modifier.size(200.dp)
                     )
-                    Text(text = "Last Read", fontWeight = FontWeight.Medium, fontSize = 14.sp)
                 }
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = surahName, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                Text(text = "Ayah no.$ayahNumber", fontSize = 13.sp, fontWeight = FontWeight.Normal)
             }
             Image(
-                painter = painterResource(id = R.drawable.cache_large1),
+                painter = painterResource(id = R.drawable.ic_mushaf),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxHeight()
@@ -170,7 +166,7 @@ fun CardSection(
 @Composable
 fun MainSection(
     list: List<Data>,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     LazyColumn {
         items(list.size) {

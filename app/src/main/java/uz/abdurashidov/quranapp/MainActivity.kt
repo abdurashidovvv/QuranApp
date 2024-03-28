@@ -49,3 +49,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+/*
+https://al-quran-api-three.vercel.app/quran/1
+* */
