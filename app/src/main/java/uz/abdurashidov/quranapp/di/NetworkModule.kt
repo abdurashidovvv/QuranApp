@@ -7,9 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.abdurashidov.quranapp.data.remote.ApiService
-import uz.abdurashidov.quranapp.data.remote.repository.DetailRepositoryImpl
 import uz.abdurashidov.quranapp.domain.repository.DetailRepository
-import uz.abdurashidov.quranapp.domain.usecases.FetchAyahsUseCase
 import uz.abdurashidov.quranapp.utils.Constants
 import javax.inject.Singleton
 
@@ -29,13 +27,4 @@ object NetworkModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideDetailRepository(apiService: ApiService): DetailRepository =
-        DetailRepositoryImpl(apiService)
-
-    @Provides
-    @Singleton
-    fun provideFetchAyahUseCase(detailRepository: DetailRepository, number: Int) =
-        FetchAyahsUseCase(detailRepository)
 }

@@ -1,6 +1,14 @@
 package uz.abdurashidov.quranapp.domain.repository
 
-interface DetailRepository {
-    suspend fun fetchKeys(surahNumber:Int): List<String>
-    suspend fun fetchValues(surahNumber: Int): List<String>
+import kotlinx.coroutines.flow.flow
+import uz.abdurashidov.quranapp.data.remote.ApiService
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class DetailRepository @Inject constructor(
+    private val apiService: ApiService,
+) {
+    suspend fun getAllSurahDetails(surahNumber: Int) =
+        flow { emit(apiService.getAllSurahDetails(surahNumber)) }
 }
