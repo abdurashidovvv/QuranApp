@@ -44,7 +44,12 @@ fun DetailScreen(
     argument: Int?,
     detailScreenViewModel: DetailScreenViewModel,
 ) {
-    detailScreenViewModel.getAllSurahDetails(argument ?: 0)
+    if (argument != null) {
+        detailScreenViewModel.getAllSurahDetails(argument + 1)
+    } else {
+        detailScreenViewModel.getAllSurahDetails(1)
+    }
+
     val ayahs by detailScreenViewModel.ayahs.collectAsState()
 
     Column(
@@ -66,19 +71,23 @@ fun DetailScreen(
 @Composable
 fun CustomAppBar(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.detailback),
             contentDescription = null,
-            modifier = Modifier.size(30.dp).clickable {
-                navController.popBackStack()
-            }
+            modifier = Modifier
+                .size(30.dp)
+                .padding(5.dp)
+                .clickable {
+                    navController.popBackStack()
+                }
         )
 
         Text(
