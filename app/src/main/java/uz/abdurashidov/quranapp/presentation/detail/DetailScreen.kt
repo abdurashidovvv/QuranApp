@@ -60,7 +60,11 @@ fun DetailScreen(
     ) {
         CustomAppBar(navController = navController)
         Spacer(modifier = Modifier.height(30.dp))
-        DescriptionSection(ayahName = "Al-Fatiha", ayahVerse = 7, ayahEnglishName = "The Opener")
+        DescriptionSection(
+            ayahName = ayahs?.data?.get(0)?.englishName ?: "",
+            ayahVerse = ayahs?.data?.get(0)?.ayahs?.size ?: 0,
+            ayahEnglishName = ayahs?.data?.get(0)?.englishNameTranslation ?: ""
+        )
         MainSection(
             ayahsAr = ayahs?.data?.get(0)?.ayahs ?: emptyList(),
             ayahEng = ayahs?.data?.get(2)?.ayahs ?: emptyList()
